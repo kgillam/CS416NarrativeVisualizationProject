@@ -8,12 +8,13 @@
 <script src="./draw_us_map.js"></script>
 <body onload='init()'>
 <button onclick="draw_map()"></button>
-<svg width="960" height="600"></svg>
+<svg id="us_map_legend" width="960" height="100"></svg>
+<svg id="us_map" width="960" height="600"></svg>
 <script>
 async function init() {
 //  d3.select("button")
 //	 .on("click", draw_map());
-
+  setup_defs();
   update_data();
   //draw_map();
 }

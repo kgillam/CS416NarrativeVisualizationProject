@@ -2,6 +2,30 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function setup_defs() {
+	var svg = d3.select("#us_map_legend");
+	var defs = svg.append("defs");
+	
+	var gradient = defs.append("linearGradient")
+	.attr("id", "svgGradient")
+	.attr("x1", "0%")
+	.attr("x2", "100%")
+	.attr("y1", "0%")
+	.attr("y2", "0%");
+
+	gradient.append("stop")
+	.attr("class", "start")
+	.attr("offset", "0%")
+	.attr("stop-color", "white")
+	.attr("stop-opacity", 1);
+
+	gradient.append("stop")
+	.attr("class", "end")
+	.attr("offset", "100%")
+	.attr("stop-color", "red")
+	.attr("stop-opacity", 1);
+}
+
 
 const states = new Map([
 	["AL",	"01"],
