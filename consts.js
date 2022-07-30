@@ -22,11 +22,18 @@ function setup_defs() {
 	gradient.append("stop")
 	.attr("class", "end")
 	.attr("offset", "100%")
-	.attr("stop-color", "red")
+	.attr("stop-color", "blue")
 	.attr("stop-opacity", 1);
 }
 
 
+function getByValue(map, searchValue) {
+  for (let [key, value] of map.entries()) {
+    if (value === searchValue)
+      return key;
+  }
+}
+ 
 const states = new Map([
 	["AL",	"01"],
 	["AK",	"02"],
@@ -79,3 +86,10 @@ const states = new Map([
 	["WI",	"55"],
 	["WY",	"56"]
 ]);
+
+
+function state_keys(value) {
+	return [...states.entries()]
+        .filter(({ 1: v }) => v === value)
+        .map(([k]) => k);
+}

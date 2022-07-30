@@ -23,12 +23,11 @@ function update_map(){
 				return color_scale(values_map.get(d.id))
 				//if(d.id==states.get('CA')){return "blue"} 
 			})
-			.on("mouseover", function(){
+			.on("mouseover", function(d){
 				//show tooltip on hover
 				d3.select("#mytooltip")
 					.style("visibility", "visible")//set style to it
-					.text("new tooltip")//set text to it
-					.attr("color","black")
+					.text(state_keys(d.id) + ": " + values_map.get(d.id) + "%")//set text to it
 			})
 			.on("mouseout", function(){
 				d3.select("#mytooltip")
@@ -100,7 +99,7 @@ function draw_tooltip(){
 		.style("position", "absolute")
 		.style("z-index", "10")
 		.style("visibility", "hidden")
-		.style("background", "#000")
+		.style("background", "#FFF")
 		.text("a simple tooltip")
 		
 	svg.on("mousemove", function() { 
