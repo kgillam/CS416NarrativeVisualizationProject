@@ -1,21 +1,22 @@
 white = "#ffffff"
 dark_blue = "#0066ff"
+tooltip_color = "#f58c69"
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function setup_defs() {
-	var svg = d3.select("#us_map_legend");
+	var svg = d3.select("#us_map");
 	var defs = svg.append("defs");
 }
 
-min = 0
-mid = 50
-max = 100
-min_color = "white"
-mid_color = "#33ccff"
-max_color = "purple"
+const min = 0
+const mid = 50
+const max = 100
+const min_color = "white"
+const mid_color = "#33ccff"
+const max_color = "purple"
 const color_scale = d3.scaleLinear()
     .domain([min, mid, max])
     .range([min_color, mid_color, max_color])
