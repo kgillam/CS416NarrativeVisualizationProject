@@ -9,15 +9,17 @@ function get_data(url, callback) {
 }
 
 function format_url(year, question) {
-	return `${breastfeeding_survey_base_url}?yearstart= ${year}&questionid=${question}&`
+	return `${breastfeeding_survey_base_url}?yearstart=${year}&questionid=${question}`
 }
 
-formatted_url = format_url('2011', 'Q004')
 
 values_map = new Map([]);
 
-function update_data(){
+function update_data(new_selection){
+	formatted_url = format_url('2011', new_selection)
+	
 	get_data(formatted_url, function(data){	
+		console.log(data)
 		data.forEach(d => {
 			values_map.set(d.locationid, d.data_value)
 		});  

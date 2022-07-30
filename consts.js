@@ -1,3 +1,6 @@
+white = "#ffffff"
+dark_blue = "#0066ff"
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -22,7 +25,7 @@ function setup_defs() {
 	gradient.append("stop")
 	.attr("class", "end")
 	.attr("offset", "100%")
-	.attr("stop-color", "blue")
+	.attr("stop-color", dark_blue)
 	.attr("stop-opacity", 1);
 }
 

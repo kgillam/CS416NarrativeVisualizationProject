@@ -1,6 +1,6 @@
 us_data = null;
 
-function update_map(){
+function update_map(color_scale){
 	var svg = d3.select("#us_map");
 	var path = d3.geoPath();
 	
@@ -9,7 +9,7 @@ function update_map(){
 	
 	color_scale = d3.scaleLinear()
 		.domain([0,100])
-		.range(["white", "blue"])
+		.range(["white", dark_blue])
 	//TODO
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 		if (error) throw error;
@@ -79,7 +79,7 @@ function draw_map(){
 	});
 };
 
-function draw_legend(color_scale){
+function draw_legend(){
 	var svg = d3.select("#us_map_legend");
 	
 	svg.append("rect")
@@ -89,21 +89,27 @@ function draw_legend(color_scale){
 		.attr("width",300)
 		.attr("fill", "url(#svgGradient)");
 		
-	d3.select("body").append("div")
+	var dropdown = d3.select("body").append("div")
 	    .attr("id", "vis-container")
 		.insert("select", "svg")
-		.on("change", function() {
+		
+	dropdown.on("change", function() {
 			var new_selection = d3.select(this).property('value')
 			update_data(new_selection)
 			update_map()
 		})
-		.selectAll("option")
+	
+	dropdown.selectAll("option")
 			.data(options)
 			.enter().append("option")
 			.attr("value", function (d) { return d["QuestionID"]; })
 			.text(function (d) {
 				return d["Question"];
 		});
+	
+	first_selection = "Q006"
+	dropdown.property("selected", function(){ return first_selection; })
+	update_data(first_selection)
 }
 
 function draw_tooltip(){

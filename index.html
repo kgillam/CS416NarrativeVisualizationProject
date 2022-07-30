@@ -14,9 +14,14 @@
 async function init() {
 //  d3.select("button")
 //	 .on("click", draw_map());
-  setup_defs();
-  update_data();
-  draw_map();
+	setup_defs();
+	update_data();
+	
+	draw_legend();
+	draw_tooltip();
+	update_map();
+	  
+  //draw_map();
 }
 </script>
 </body>
