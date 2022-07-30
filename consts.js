@@ -8,26 +8,14 @@ function sleep(ms) {
 function setup_defs() {
 	var svg = d3.select("#us_map_legend");
 	var defs = svg.append("defs");
-	
-	var gradient = defs.append("linearGradient")
-	.attr("id", "svgGradient")
-	.attr("x1", "0%")
-	.attr("x2", "100%")
-	.attr("y1", "0%")
-	.attr("y2", "0%");
-
-	gradient.append("stop")
-	.attr("class", "start")
-	.attr("offset", "0%")
-	.attr("stop-color", "white")
-	.attr("stop-opacity", 1);
-
-	gradient.append("stop")
-	.attr("class", "end")
-	.attr("offset", "100%")
-	.attr("stop-color", dark_blue)
-	.attr("stop-opacity", 1);
 }
+
+min = 0
+mid = 50
+max = 100
+const color_scale = d3.scaleLinear()
+    .domain([min, mid, max])
+    .range(["white", "#33ccff", "purple"])
 
 
 function getByValue(map, searchValue) {

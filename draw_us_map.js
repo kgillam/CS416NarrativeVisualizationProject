@@ -1,15 +1,12 @@
 us_data = null;
 
-function update_map(color_scale){
+function update_map(){
 	var svg = d3.select("#us_map");
 	var path = d3.geoPath();
 	
 	//clear svg children
 	svg.selectAll("*").remove(); 
-	
-	color_scale = d3.scaleLinear()
-		.domain([0,100])
-		.range(["white", dark_blue])
+
 	//TODO
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 		if (error) throw error;
@@ -110,13 +107,20 @@ function add_options_to_dropdown(dropdown, options, value_key, text_key, first_s
 
 function draw_legend(){
 	var svg = d3.select("#us_map_legend");
-	
+	setup_gradient()
+
 	svg.append("rect")
 		.attr("x",50)
 		.attr("y",50)
 		.attr("height",10)
 		.attr("width",300)
-		.attr("fill", "url(#svgGradient)");
+		.attr("fill", "url(#svgGradient1)");
+    svg.append("rect")
+        .attr("x",50 + 300)
+        .attr("y",50)
+        .attr("height",10)
+        .attr("width",300)
+        .attr("fill", "url(#svgGradient2)");
 
 	var vis_container = d3.select("body").append("div")
     	    .attr("id", "vis-container")
@@ -134,6 +138,53 @@ function draw_legend(){
 
 	update_data("2000", "Q006")
 }
+
+function setup_gradient(){
+	var defs = d3.select("#us_map_legend").select("defs");
+
+	var gradient1 = defs.append("linearGradient")
+		.attr("id", "svgGradient1")
+        .attr("x1", "0%")
+        .attr("x2", "100%")
+        .attr("y1", "0%")
+        .attr("y2", "0%");
+
+    var gradient2 = defs.append("linearGradient")
+        .attr("id", "svgGradient2")
+        .attr("x1", "0%")
+        .attr("x2", "100%")
+        .attr("y1", "0%")
+        .attr("y2", "0%");
+
+	gradient1.append("stop")
+	    .datum({min: min})
+        .attr("class", "start")
+        .attr("offset", "0%")
+        .attr("stop-color", function(d) { return color_scale(d.min) })
+        .attr("stop-opacity", 1);
+
+	gradient1.append("stop")
+	    .datum({mid: mid})
+        .attr("class", "end")
+        .attr("offset", "100%")
+        .attr("stop-color", function(d) { return color_scale(d.mid) })
+        .attr("stop-opacity", 1);
+
+	gradient2.append("stop")
+	    .datum({mid: mid})
+        .attr("class", "start")
+        .attr("offset", "0%")
+        .attr("stop-color", function(d) { return color_scale(d.mid) })
+        .attr("stop-opacity", 1);
+
+	gradient2.append("stop")
+	    .datum({max: max})
+        .attr("class", "end")
+        .attr("offset", "100%")
+        .attr("stop-color", function(d) { return color_scale(d.max) })
+        .attr("stop-opacity", 1);
+}
+
 
 function draw_tooltip(){
 	var svg = d3.select("#us_map");
