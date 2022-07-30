@@ -88,6 +88,22 @@ function draw_legend(color_scale){
 		.attr("height",10)
 		.attr("width",300)
 		.attr("fill", "url(#svgGradient)");
+		
+	d3.select("body").append("div")
+	    .attr("id", "vis-container")
+		.insert("select", "svg")
+		.on("change", function() {
+			var new_selection = d3.select(this).property('value')
+			update_data(new_selection)
+			update_map()
+		})
+		.selectAll("option")
+			.data(options)
+			.enter().append("option")
+			.attr("value", function (d) { return d["QuestionID"]; })
+			.text(function (d) {
+				return d["Question"];
+		});
 }
 
 function draw_tooltip(){
@@ -107,3 +123,6 @@ function draw_tooltip(){
 			.style("left",(d3.event.pageX+10)+"px"); 
 		});
 }
+
+
+

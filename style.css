@@ -2,6 +2,10 @@ body {
   background-color: white;
 }
 
+select {
+	display: block;
+}
+
 .states {
   fill: grey;
 }

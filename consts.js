@@ -93,3 +93,22 @@ function state_keys(value) {
         .filter(({ 1: v }) => v === value)
         .map(([k]) => k);
 }
+
+
+//var options = new Map[
+//	["Q004", "question 1"],
+//	["Q005", "question 2"],
+//	["Q006", "question 3"],
+//	["Q007", "question 4"]
+//]}
+
+var options = [
+	{"QuestionID":"Q001", "Question":"Percent of breastfed infants who were supplemented with infant formula before 3 months"},
+	{"QuestionID":"Q002", "Question":"Percent of breastfed infants who were supplemented with infant formula before 6 months"},
+	{"QuestionID":"Q003", "Question":"Percent of breastfed infants who were supplemented with infant formula within 2 days of life"},
+	{"QuestionID":"Q004", "Question":"Percent of infants who were breastfed at 12 months"},
+	{"QuestionID":"Q005", "Question":"Percent of infants who were breastfed at 6 months"},
+	{"QuestionID":"Q006", "Question":"Percent of infants who were ever breastfed"},
+	{"QuestionID":"Q007", "Question":"Percent of infants who were exclusively breastfed through 3 months"},
+	{"QuestionID":"Q008", "Question":"Percent of infants who were exclusively breastfed through 6 months"}
+]
