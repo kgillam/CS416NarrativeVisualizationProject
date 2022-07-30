@@ -105,7 +105,7 @@ function state_keys(value) {
 //	["Q007", "question 4"]
 //]}
 
-var options = [
+var breastfed_question_options = [
 	{"QuestionID":"Q001", "Question":"Percent of breastfed infants who were supplemented with infant formula before 3 months"},
 	{"QuestionID":"Q002", "Question":"Percent of breastfed infants who were supplemented with infant formula before 6 months"},
 	{"QuestionID":"Q003", "Question":"Percent of breastfed infants who were supplemented with infant formula within 2 days of life"},
@@ -114,4 +114,25 @@ var options = [
 	{"QuestionID":"Q006", "Question":"Percent of infants who were ever breastfed"},
 	{"QuestionID":"Q007", "Question":"Percent of infants who were exclusively breastfed through 3 months"},
 	{"QuestionID":"Q008", "Question":"Percent of infants who were exclusively breastfed through 6 months"}
+]
+
+var breastfed_year_options = [
+    {"year":"2000"},
+    {"year":"2001"},
+    {"year":"2002"},
+    {"year":"2003"},
+    {"year":"2004"},
+    {"year":"2005"},
+    {"year":"2006"},
+    {"year":"2007"},
+    {"year":"2008"},
+    {"year":"2009"},
+    {"year":"2010"},
+    {"year":"2011"},
+    {"year":"2012"},
+    {"year":"2013"},
+    {"year":"2014"},
+    {"year":"2016"},
+    {"year":"2017"},
+    {"year":"2018"}
 ]

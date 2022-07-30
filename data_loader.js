@@ -9,21 +9,29 @@ function get_data(url, callback) {
 }
 
 function format_url(year, question) {
-	return `${breastfeeding_survey_base_url}?yearstart=${year}&questionid=${question}`
+    if (year && question) {
+	    return `${breastfeeding_survey_base_url}?yearstart=${year}&questionid=${question}`
+    } else {
+        return null
+    }
 }
 
 
 values_map = new Map([]);
 
-function update_data(new_selection){
-	formatted_url = format_url('2011', new_selection)
-	
-	get_data(formatted_url, function(data){	
-		console.log(data)
-		data.forEach(d => {
-			values_map.set(d.locationid, d.data_value)
-		});  
-	});
+function update_data(year_selection, question_selection){
+	formatted_url = format_url(year_selection, question_selection)
+	console.log("formatted url: " + formatted_url)
+
+	if (formatted_url) {
+        get_data(formatted_url, function(data){
+            console.log(data);
+
+            data.forEach(d => {
+                values_map.set(d.locationid, d.data_value)
+            });
+        });
+	}
 }
 
 //get_data(formatted_url, function(data){

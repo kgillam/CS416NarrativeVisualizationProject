@@ -79,6 +79,35 @@ function draw_map(){
 	});
 };
 
+
+function update_selections(d) {
+	var question_dropdown = d3.select("#question_dropdown")
+    var year_dropdown = d3.select("#year_dropdown")
+
+    console.log(year_dropdown)
+
+	var question_selection = question_dropdown.property('value')
+    var year_selection = year_dropdown.property('value')
+
+    console.log(year_selection)
+    console.log(question_selection)
+
+    update_data(year_selection, question_selection)
+    update_map()
+}
+
+function add_options_to_dropdown(dropdown, options, value_key, text_key, first_selection) {
+    dropdown.selectAll("option")
+    			.data(options)
+    			.enter().append("option")
+    			.attr("value", function (d) { return d[value_key]; })
+    			.text(function (d) {
+    				return d[text_key];
+    		});
+
+    dropdown.property("selected", function(){ return first_selection; })
+}
+
 function draw_legend(){
 	var svg = d3.select("#us_map_legend");
 	
@@ -88,28 +117,22 @@ function draw_legend(){
 		.attr("height",10)
 		.attr("width",300)
 		.attr("fill", "url(#svgGradient)");
-		
-	var dropdown = d3.select("body").append("div")
-	    .attr("id", "vis-container")
-		.insert("select", "svg")
-		
-	dropdown.on("change", function() {
-			var new_selection = d3.select(this).property('value')
-			update_data(new_selection)
-			update_map()
-		})
-	
-	dropdown.selectAll("option")
-			.data(options)
-			.enter().append("option")
-			.attr("value", function (d) { return d["QuestionID"]; })
-			.text(function (d) {
-				return d["Question"];
-		});
-	
-	first_selection = "Q006"
-	dropdown.property("selected", function(){ return first_selection; })
-	update_data(first_selection)
+
+	var vis_container = d3.select("body").append("div")
+    	    .attr("id", "vis-container")
+
+	var question_dropdown = vis_container.insert("select", "svg")
+	                        .attr("id", "question_dropdown")
+	                        .on("change", update_selections)
+
+	var year_dropdown = vis_container.insert("select", "svg")
+		                    .attr("id", "year_dropdown")
+		                    .on("change", update_selections)
+
+    add_options_to_dropdown(question_dropdown, breastfed_question_options, "QuestionID", "Question", "Q006")
+    add_options_to_dropdown(year_dropdown, breastfed_year_options, "year", "year", "2000")
+
+	update_data("2000", "Q006")
 }
 
 function draw_tooltip(){
