@@ -1,11 +1,3 @@
-
-
-function update_map(state_paths){
-	d3.selectAll("path")
-	  .style("fill", function(d){ 
-	  if(d && d.id==state_paths.id){return "blue"} });
-}
-
 function draw_map(){	
 	var svg = d3.select("svg");
 
@@ -14,16 +6,20 @@ function draw_map(){
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 	  if (error) throw error;
 
+	  console.log(promise);
+	  console.log(us);
+	  
 	  svg.append("g")
 		  .attr("class", "states")
 		.selectAll("path")
 		.data(topojson.feature(us, us.objects.states).features)
 		.enter().append("path")
 		  .attr("d", path)
-		  .style("fill", function(d){ if(d.id==states.get('CA')){return "blue"} })
+		  .style("fill", function(d){ 
+			if(d.id==states.get('CA')){return "blue"} 
+		  })
 		  .on("click", function(d,i){
 			  console.log(d.id + " " + i);
-			  update_map(d);
 		  });
 
 	  svg.append("path")

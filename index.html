@@ -6,10 +6,17 @@
 <script src="./consts.js"></script>
 <script src="./data_loader.js"></script>
 <script src="./draw_us_map.js"></script>
-<body>
+<body onload='init()'>
+<button onclick="draw_map()"></button>
 <svg width="960" height="600"></svg>
 <script>
-draw_map();
+async function init() {
+//  d3.select("button")
+//	 .on("click", draw_map());
+
+  update_data();
+  //draw_map();
+}
 </script>
 </body>
 </html>
