@@ -124,3 +124,15 @@ var breastfed_year_options = [
     {"year":"2017"},
     {"year":"2018"}
 ]
+
+var annotation_positions = [
+    [20, 0],    //north west
+    [30, 430],  //south west
+    [400, 10],  //north
+    [700, 50],  //north east
+    [600, 550], //south
+    [850, 450]  //east
+]
+
+
+

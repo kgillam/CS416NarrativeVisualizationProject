@@ -33,6 +33,8 @@ function update_map(){
 			})
 			.on("click", function(d,i){
 				console.log(d.id + " " + i);
+				console.log(d3.mouse(this));
+				draw_annotation(d.id, d3.mouse(this));
 			});
 
 		svg.append("path")
@@ -40,6 +42,49 @@ function update_map(){
 			  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
 		
 	});
+}
+
+function distance(start, end){
+    var a = start[0] - end[0] //x1 - x2;
+    var b = start[1] - end[1] //y1 - y2;
+
+    var c = Math.sqrt( a*a + b*b );
+    return c
+}
+
+function get_nearest_annotation_spot(start){
+    end_point = annotation_positions[0]
+    min_distance = 10000;
+    for (var i=0; i < annotation_positions.length; i++){
+        point = annotation_positions[i]
+        new_dist = distance(start, point)
+        if (new_dist < min_distance) {
+            min_distance = new_dist
+            end_point = point
+        }
+    }
+    console.log(end_point)
+    return end_point
+}
+
+function draw_annotation(id, start){
+    const line = d3.line().context(null);
+    clear_annotation()
+
+    var end = get_nearest_annotation_spot(start)
+    var state = state_keys(id)
+    var data = [start,end]
+    var svg = d3.select("#us_map")
+              .append("path")
+              .attr("id", "annotation")
+              .attr("d", line(data))
+              .attr("stroke", "black")
+
+}
+
+function clear_annotation(){
+    var annotation = d3.select("#annotation");
+    annotation.remove();
 }
 
 function draw_map(){	
