@@ -13,9 +13,12 @@ function setup_defs() {
 min = 0
 mid = 50
 max = 100
+min_color = "white"
+mid_color = "#33ccff"
+max_color = "purple"
 const color_scale = d3.scaleLinear()
     .domain([min, mid, max])
-    .range(["white", "#33ccff", "purple"])
+    .range([min_color, mid_color, max_color])
 
 
 function getByValue(map, searchValue) {
@@ -85,14 +88,6 @@ function state_keys(value) {
         .map(([k]) => k);
 }
 
-
-//var options = new Map[
-//	["Q004", "question 1"],
-//	["Q005", "question 2"],
-//	["Q006", "question 3"],
-//	["Q007", "question 4"]
-//]}
-
 var breastfed_question_options = [
 	{"QuestionID":"Q001", "Question":"Percent of breastfed infants who were supplemented with infant formula before 3 months"},
 	{"QuestionID":"Q002", "Question":"Percent of breastfed infants who were supplemented with infant formula before 6 months"},
@@ -126,13 +121,65 @@ var breastfed_year_options = [
 ]
 
 var annotation_positions = [
-    [20, 0],    //north west
-    [30, 430],  //south west
-    [400, 10],  //north
-    [700, 50],  //north east
+    [150,  5],  //north west
+    [30,  430], //south west
+    [400,  30], //north
+    [700,  50], //north east
     [600, 550], //south
+    [880, 250], //new_england
     [850, 450]  //east
 ]
 
 
-
+const state_positions = new Map([
+	["01", [652, 434]],
+	["02", [101, 504]],
+	["04", [208, 381]],
+	["05", [554, 387]],
+	["06", [61,  326]],
+	["08", [331, 284]],
+	["09", [873, 185]],
+	["10", [842, 259]],
+	["12", [775, 508]],
+	["13", [732, 422]],
+	["15", [317, 575]],
+	["16", [181, 120]],
+	["17", [606, 266]],
+	["18", [658, 253]],
+	["19", [532, 221]],
+	["20", [449, 307]],
+	["21", [688, 312]],
+	["22", [557, 474]],
+	["23", [896, 101]],
+	["24", [815, 253]],
+	["25", [876, 169]],
+	["26", [675, 177]],
+	["27", [515, 127]],
+	["28", [610, 429]],
+	["29", [545, 304]],
+	["30", [330, 85]],
+	["31", [431, 244]],
+	["32", [148, 243]],
+	["33", [876, 137]],
+	["34", [849, 237]],
+	["35", [309, 389]],
+	["36", [819, 165]],
+	["37", [805, 345]],
+	["38", [416, 99]],
+	["39", [714, 248]],
+	["40", [468, 377]],
+	["41", [76,  116]],
+	["42", [794, 221]],
+	["44", [890, 180]],
+	["45", [770, 389]],
+	["46", [428, 172]],
+	["47", [664, 357]],
+	["48", [434, 461]],
+	["49", [222, 266]],
+	["50", [857, 124]],
+	["51", [798, 293]],
+	["53", [109, 56]],
+	["54", [746, 283]],
+	["55", [584, 159]],
+	["56", [311, 193]]
+]);

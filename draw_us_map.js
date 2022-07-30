@@ -5,7 +5,7 @@ function update_map(){
 	var path = d3.geoPath();
 	
 	//clear svg children
-	svg.selectAll("*").remove(); 
+	svg.selectAll("*").remove();
 
 	//TODO
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
@@ -16,7 +16,7 @@ function update_map(){
 			.data(topojson.feature(us, us.objects.states).features)
 			.enter().append("path")
 			.attr("d", path)
-			.style("fill", function(d){ 
+			.style("fill", function(d){
 				return color_scale(values_map.get(d.id))
 				//if(d.id==states.get('CA')){return "blue"} 
 			})
@@ -34,15 +34,47 @@ function update_map(){
 			.on("click", function(d,i){
 				console.log(d.id + " " + i);
 				console.log(d3.mouse(this));
-				draw_annotation(d.id, d3.mouse(this));
+				draw_annotation(d.id, d3.mouse(this), "click_label");
 			});
 
 		svg.append("path")
 			  .attr("class", "state-borders")
 			  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
-		
+
+	    low_state = get_state_lowest_rate()
+	    highest_state = get_state_highest_rate()
+        draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest_label")
+        draw_annotation(highest_state, state_positions.get(highest_state) , "highest_label")
+
 	});
 }
+
+function get_state_lowest_rate(){
+    lowest_state = null
+    lowest_value = 101
+    for (var [key, value] of values_map.entries()){
+        if (value < lowest_value){
+            lowest_state = key
+            lowest_value = value
+        }
+    }
+
+    return lowest_state
+}
+
+function get_state_highest_rate(){
+    highest_state = null
+    highest_value = -1
+    for (var [key, value] of values_map.entries()){
+        if (value > highest_value){
+            highest_state = key
+            highest_value = value
+        }
+    }
+
+    return highest_state
+}
+
 
 function distance(start, end){
     var a = start[0] - end[0] //x1 - x2;
@@ -63,28 +95,48 @@ function get_nearest_annotation_spot(start){
             end_point = point
         }
     }
-    console.log(end_point)
     return end_point
 }
 
-function draw_annotation(id, start){
+function draw_annotation(state_id, start, id, color="black"){
     const line = d3.line().context(null);
-    clear_annotation()
+    clear_annotation(id)
 
     var end = get_nearest_annotation_spot(start)
-    var state = state_keys(id)
+    var state = state_keys(state_id)
     var data = [start,end]
     var svg = d3.select("#us_map")
-              .append("path")
-              .attr("id", "annotation")
-              .attr("d", line(data))
-              .attr("stroke", "black")
+
+    svg.append("path")
+        .attr("id", id)
+        .attr("d", line(data))
+        .attr("stroke", color)
+
+    g = svg.append("g")
+        .attr("id", id + "_label")
+
+    g.append("rect")
+        .attr("x", end[0]-15)
+        .attr("y", end[1]-15)
+        .attr("width", 30)
+        .attr("height", 30)
+        .attr("fill", "white")
+
+    g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", end[0])
+        .attr("y", end[1])
+        .attr("dy", ".65em")
+        .text(state)
+
 
 }
 
-function clear_annotation(){
-    var annotation = d3.select("#annotation");
+function clear_annotation(id){
+    var annotation = d3.select("#"+id);
     annotation.remove();
+    var annotation_label = d3.select("#"+id+"_label");
+    annotation_label.remove();
 }
 
 function draw_map(){	
