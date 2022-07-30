@@ -1,3 +1,11 @@
+
+
+function update_map(state_paths){
+	d3.selectAll("path")
+	  .style("fill", function(d){ 
+	  if(d && d.id==state_paths.id){return "blue"} });
+}
+
 function draw_map(){	
 	var svg = d3.select("svg");
 
@@ -12,11 +20,14 @@ function draw_map(){
 		.data(topojson.feature(us, us.objects.states).features)
 		.enter().append("path")
 		  .attr("d", path)
-		  .style("fill", function(d){ if(d.id=='06'){return "blue"} });
+		  .style("fill", function(d){ if(d.id==states.get('CA')){return "blue"} })
+		  .on("click", function(d,i){
+			  console.log(d.id + " " + i);
+			  update_map(d);
+		  });
 
 	  svg.append("path")
 		  .attr("class", "state-borders")
 		  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
 	});
 };
-

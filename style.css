@@ -2,6 +2,10 @@ body {
   background-color: lightblue;
 }
 
+.states {
+  fill: grey;
+}
+
 .states :hover {
   fill: red;
 }
