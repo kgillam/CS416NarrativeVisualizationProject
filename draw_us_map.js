@@ -24,7 +24,7 @@ function update_map(){
 				//show tooltip on hover
 				d3.select("#mytooltip")
 					.style("visibility", "visible")//set style to it
-					.text(state_keys(d.id) + ": " + values_map.get(d.id) + "%")//set text to it
+					.text(state_names.get(state_keys(d.id)[0]) + ": " + values_map.get(d.id) + "%")//set text to it
 			})
 			.on("mouseout", function(){
 				d3.select("#mytooltip")
@@ -32,9 +32,9 @@ function update_map(){
 					.text("")//set text to it
 			})
 			.on("click", function(d,i){
-				console.log(d.id + " " + i);
-				console.log(d3.mouse(this));
-				draw_annotation(d.id, d3.mouse(this), "click_label");
+//				console.log(d.id + " " + i);
+//				console.log(d3.mouse(this));
+//				draw_annotation(d.id, d3.mouse(this), "click_label");
 			});
 
 		svg.append("path")
@@ -43,8 +43,8 @@ function update_map(){
 
 	    low_state = get_state_lowest_rate()
 	    highest_state = get_state_highest_rate()
-        draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest_label")
-        draw_annotation(highest_state, state_positions.get(highest_state) , "highest_label")
+        draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
+        draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
 
 	});
 }
@@ -103,7 +103,7 @@ function draw_annotation(state_id, start, id, color="black"){
     clear_annotation(id)
 
     var end = get_nearest_annotation_spot(start)
-    var state = state_keys(state_id)
+    var state = state_keys(state_id)[0]
     var data = [start,end]
     var svg = d3.select("#us_map")
 
@@ -117,9 +117,9 @@ function draw_annotation(state_id, start, id, color="black"){
 
     g.append("rect")
         .attr("x", end[0]-15)
-        .attr("y", end[1]-15)
-        .attr("width", 30)
-        .attr("height", 30)
+        .attr("y", end[1]-5)
+        .attr("height", 15)
+        .attr("width", 50)
         .attr("fill", "white")
 
     g.append("text")
@@ -127,9 +127,7 @@ function draw_annotation(state_id, start, id, color="black"){
         .attr("x", end[0])
         .attr("y", end[1])
         .attr("dy", ".65em")
-        .text(state)
-
-
+        .text(state_names.get(state) + " has the " + id + " rate, " + values_map.get(state_id))
 }
 
 function clear_annotation(id){

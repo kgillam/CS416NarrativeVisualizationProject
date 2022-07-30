@@ -27,7 +27,61 @@ function getByValue(map, searchValue) {
       return key;
   }
 }
- 
+
+const state_names = new Map([
+	["AL",	"Alabama"],
+	["AK",	"Alaska"],
+	["AZ",	"Arkansas"],
+	["AR",	"Arizona"],
+	["CA",	"California"],
+	["CO",	"Colorado"],
+	["CT",	"Connecticut"],
+	["DE",	"Delaware"],
+	["FL",	"Florida"],
+	["GA",	"Georgia"],
+	["HI",	"Hawaii"],
+	["ID",	"Idaho"],
+	["IL",	"Illinois"],
+	["IN",	"Indiana"],
+	["IA",	"Iowa"],
+	["KS",	"Kansas"],
+	["KY",	"Kentucky"],
+	["LA",	"Louisiana"],
+	["ME",	"Maine"],
+	["MD",	"Maryland"],
+	["MA",	"Massachusetts"],
+	["MI",	"Michigan"],
+	["MN",	"Minnesota"],
+	["MS",	"Mississippi"],
+	["MO",	"Missouri"],
+	["MT",	"Montana	"],
+	["NE",	"Nebraska"],
+	["NV",	"Nevada"],
+	["NH",	"New Hampshire"],
+	["NJ",	"New Jersey"],
+	["NM",	"New Mexico"],
+	["NY",	"New York"],
+	["NC",	"North Carolina"],
+	["ND",	"North Dakota"],
+	["OH",	"Ohio"],
+	["OK",	"Oklahoma"],
+	["OR",	"Oregon"],
+	["PA",	"Pennsylvania"],
+	["RI",	"Rhode Island"],
+	["SC",	"South Carolina"],
+	["SD",	"South Dakota"],
+	["TN",	"Tennessee"],
+	["TX",	"Texas"],
+	["UT",	"Utah"],
+	["VT",	"Vermont"],
+	["VA",	"Virginia"],
+	["WA",	"Washington"],
+	["WV",	"West Virginia"],
+	["WI",	"Wisconsin"],
+	["WY",	"Wyoming"]
+])
+
+
 const states = new Map([
 	["AL",	"01"],
 	["AK",	"02"],
@@ -81,7 +135,6 @@ const states = new Map([
 	["WY",	"56"]
 ]);
 
-
 function state_keys(value) {
 	return [...states.entries()]
         .filter(({ 1: v }) => v === value)
@@ -122,11 +175,11 @@ var breastfed_year_options = [
 
 var annotation_positions = [
     [150,  5],  //north west
-    [30,  430], //south west
+    [140,  430], //south west
     [400,  30], //north
     [700,  50], //north east
     [600, 550], //south
-    [880, 250], //new_england
+//    [880, 250], //new_england
     [850, 450]  //east
 ]
 
