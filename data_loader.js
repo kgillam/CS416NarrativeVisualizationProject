@@ -43,11 +43,11 @@ pram_values_map = new Map();
 function update_pram_data(question_id, breakout_id){
 	formatted_url = format_pram_url(question_id, breakout_id)
 
-//    pram_values_map.clear();
+    pram_values_map.clear();
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
-            console.log("data " + data)
+            console.log("data received")
             data.forEach(d => {
                 pram_values_map.set(d.break_out, d.data_value)
             });

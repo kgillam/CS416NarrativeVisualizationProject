@@ -25,6 +25,7 @@
 //}
 
 function draw_chart(){
+    console.log("drawing chart")
 	var svg = d3.select("#bar_chart");
 	var margin = {top: 30, right: 30, bottom: 70, left: 60},
         width = 460 - margin.left - margin.right,
@@ -85,7 +86,7 @@ function add_chart_dropdowns(){
 	update_pram_data("QUO37", "BOC4")
 }
 
-function update_chart_selections() {
+async function update_chart_selections() {
     console.log("updating")
 	var question_dropdown = d3.select("#chart_question_dropdown")
     var breakout_dropdown = d3.select("#chart_breakout_dropdown")
@@ -94,6 +95,6 @@ function update_chart_selections() {
     var breakout_selection = breakout_dropdown.property('value')
 
     update_pram_data(question_selection, breakout_selection)
-
+    await new Promise(r => setTimeout(r, 100));//TODO
     draw_chart()
 }

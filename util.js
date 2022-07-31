@@ -41,8 +41,8 @@ function add_options_to_dropdown(dropdown, options, value_key, text_key, first_s
     			.data(options)
     			.enter().append("option")
     			.attr("value", function (d) {
-    			    console.log(d)
-    			    console.log(d[value_key])
+//    			    console.log(d)
+//    			    console.log(d[value_key])
     			    return d[value_key];
     			})
     			.text(function (d) {
