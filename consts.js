@@ -266,6 +266,7 @@ const state_positions = new Map([
 ]);
 
 var pram_all_question_codes = [
+    "QUO37",
     "QUO20",
     "QUO130",
     "QUO65",
@@ -306,7 +307,6 @@ var pram_all_question_codes = [
     "QUO155",
     "QUO151",
     "QUO158",
-    "QUO37",
     "QUO67",
     "QUO39",
     "QUO38",
@@ -395,6 +395,7 @@ var pram_all_question_codes = [
 ]
 
 var pram_all_questions = [
+    "During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about breastfeeding your baby?",
     "(*PCH) During the 12 months before you got pregnant  did your husband or partner push  hit  slap, kick, choke, or physically hurt you in any other way?",
     "(*PCH) During the 3 months before you got pregnant with your new baby  did you have high blood pressure (hypertension)?",
     "(*PCH) During the month before you got pregnant with your new baby  did you take a daily multivitamin?",
@@ -435,7 +436,6 @@ var pram_all_questions = [
     "Did you have preterm or early labor during your pregnancy?",
     "Did your cervix have have to be sewn shut (incompetent cervix  cerclage) during your pregnancy?",
     "Did your water break more than 3 weeks before your due date (premature rupture of membranes  PROM) during your pregnancy?",
-    "During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about breastfeeding your baby?",
     "During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about doing tests to screen for birth defects or diseases that run in your family?",
     "During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about getting your blood tested for HIV?",
     "During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about how drinking alcohol during pregnancy could affect your baby?",

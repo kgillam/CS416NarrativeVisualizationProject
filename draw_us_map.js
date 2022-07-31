@@ -2,24 +2,26 @@ function update_first_map(){
     update_map(
         "us_map",
         breastfeeding_values_map,
+        "Percent % responding 'Yes' to question.",
         function(d){
             return state_names.get(state_keys(d.id)[0]) + ": " + breastfeeding_values_map.get(d.id) + "%"
         },
         function(d){
-            low_state = get_state_lowest_rate()
-            highest_state = get_state_highest_rate()
-            draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
-            draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
+            low_state = get_state_lowest_rate(breastfeeding_values_map)
+            highest_state = get_state_highest_rate(breastfeeding_values_map)
+            draw_annotation("us_map", breastfeeding_values_map, lowest_state, state_positions.get(lowest_state) , "lowest", " has the lowest rate: ")
+            draw_annotation("us_map", breastfeeding_values_map, highest_state, state_positions.get(highest_state) , "highest", " has the highest rate: ")
         }
     )
 }
 
 async function update_second_map(){
-    await new Promise(r => setTimeout(r, 400));//TODO
+    await new Promise(r => setTimeout(r, 600));//TODO
     console.log("drawing_second_map")
     update_map(
         "second_map",
         pram_state_values_map,
+        "Spread of values between demographic groups",
         function(d){
             black = Math.round(pram_state_values_map_black.get(d.id))
             hispanic = Math.round(pram_state_values_map_hispanic.get(d.id))
@@ -27,26 +29,26 @@ async function update_second_map(){
             white = Math.round(pram_state_values_map_white.get(d.id))
             value = Math.round(pram_state_values_map.get(d.id))
             if (value){
-                return `${state_names.get(state_keys(d.id)[0])}: ${value} difference between highest and lowest\n black: ${black}\n hispanic: ${hispanic}\n other: ${other}\n white: ${white}`
+                return `${state_names.get(state_keys(d.id)[0])}: \n black: ${black}\n hispanic: ${hispanic}\n other: ${other}\n white: ${white}`
             }
             return "Data not available for " + state_names.get(state_keys(d.id)[0])
+        },
+        function(d){
+            low_state = get_state_lowest_rate(pram_state_values_map)
+            highest_state = get_state_highest_rate(pram_state_values_map)
+            draw_annotation("second_map", pram_state_values_map, lowest_state, state_positions.get(lowest_state) , "lowest2", " has the lowest disparity: ")
+            draw_annotation("second_map", pram_state_values_map, highest_state, state_positions.get(highest_state) , "highest2", " has the highest disparity: ")
         }
-//        function(d){
-//            low_state = get_state_lowest_rate()
-//            highest_state = get_state_highest_rate()
-//            draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
-//            draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
-//        }
     )
 }
 
-function update_map(map_id, values_map, text_function, other_updates){
+function update_map(map_id, values_map, legend_text, text_function, other_updates){
 	var svg = d3.select("#"+map_id);
 	var path = d3.geoPath();
 	
 	//clear svg children
 	svg.selectAll("*").remove();
-    draw_legend(map_id)
+    draw_legend(map_id, legend_text)
 
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 		if (error) throw error;
@@ -93,10 +95,10 @@ function update_map(map_id, values_map, text_function, other_updates){
 	});
 }
 
-function get_state_lowest_rate(){
+function get_state_lowest_rate(values_map){
     lowest_state = null
     lowest_value = 101
-    for (var [key, value] of breastfeeding_values_map.entries()){
+    for (var [key, value] of values_map.entries()){
         if (value < lowest_value){
             lowest_state = key
             lowest_value = value
@@ -106,10 +108,10 @@ function get_state_lowest_rate(){
     return lowest_state
 }
 
-function get_state_highest_rate(){
+function get_state_highest_rate(values_map){
     highest_state = null
     highest_value = -1
-    for (var [key, value] of breastfeeding_values_map.entries()){
+    for (var [key, value] of values_map.entries()){
         if (value > highest_value){
             highest_state = key
             highest_value = value
@@ -133,14 +135,14 @@ function get_nearest_annotation_spot(start){
     return end_point
 }
 
-function draw_annotation(state_id, start, id, color="black"){
+function draw_annotation(map_id, values_map, state_id, start, id, name, color="black"){
     const line = d3.line().context(null);
     clear_annotation(id)
 
     var end = get_nearest_annotation_spot(start)
     var state = state_keys(state_id)[0]
     var data = [start,end]
-    var svg = d3.select("#us_map")
+    var svg = d3.select("#"+map_id)
 
     svg.append("path")
         .attr("id", id)
@@ -152,10 +154,10 @@ function draw_annotation(state_id, start, id, color="black"){
 
     g.append("rect")
     	.attr("class", "tooltip")
-        .attr("x", end[0]-150)
+        .attr("x", end[0]-175)
         .attr("y", end[1]-5)
         .attr("height", 20)
-        .attr("width", 300)
+        .attr("width", 350)
         .attr("fill", tooltip_color)
 //        .attr("opacity", 0.5)
 
@@ -165,7 +167,7 @@ function draw_annotation(state_id, start, id, color="black"){
         .attr("x", end[0])
         .attr("y", end[1])
         .attr("dy", ".65em")
-        .text(state_names.get(state) + " has the " + id + " rate, " + breastfeeding_values_map.get(state_id) + "%")
+        .text(state_names.get(state) + name + Math.round(values_map.get(state_id)*10)/10 + "%")
 }
 
 function clear_annotation(id){
@@ -195,7 +197,7 @@ function update_second_map_selections(d){
     update_second_map()
 }
 
-function draw_legend(id){
+function draw_legend(id, legend_text){
 	var svg = d3.select("#"+id);
 	setup_gradient(id)
 
@@ -217,13 +219,20 @@ function draw_legend(id){
         .attr("width",width)
         .attr("fill", "url(#" + id + "svgGradient2)");
     svg.append("text")
-        .text("100%")
+        .text("100")
 		.attr("x",x-10)
 		.attr("y",y-5)
     svg.append("text")
-        .text("0%")
+        .text("0")
 		.attr("x",x)
 		.attr("y",y + height*2 + 5)
+    svg.append("text")
+        .text(legend_text)
+        .attr("x",100)
+        .attr("y",-1025)
+        .style('text-anchor', 'start')
+        .attr('transform', 'rotate(90)')
+//        .style("text-anchor", "center")
 }
 
 function add_dropdowns(){
@@ -261,9 +270,9 @@ function add_second_map_dropdowns(){
 	                        .attr("id", "second_question_dropdown")
 	                        .on("change", update_second_map_selections)
 
-    add_options_to_dropdown(second_question_dropdown, pram_state_question_options, "QuestionId", "Question", "QUO8")
+    add_options_to_dropdown(second_question_dropdown, pram_state_question_options, "QuestionId", "Question", "QUO37")
 
-	update_pram_state_data("QUO8")
+	update_pram_state_data("QUO37")
 }
 
 
