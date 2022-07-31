@@ -6,8 +6,8 @@ function update_map(){
 	
 	//clear svg children
 	svg.selectAll("*").remove();
+    draw_legend()
 
-	//TODO
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 		if (error) throw error;
 		svg.append("g")
@@ -18,7 +18,6 @@ function update_map(){
 			.attr("d", path)
 			.style("fill", function(d){
 				return color_scale(values_map.get(d.id))
-				//if(d.id==states.get('CA')){return "blue"} 
 			})
 			.on("mouseover", function(d){
 				//show tooltip on hover
@@ -45,7 +44,6 @@ function update_map(){
 	    highest_state = get_state_highest_rate()
         draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
         draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
-        draw_legend()
 	});
 }
 
@@ -142,40 +140,6 @@ function clear_annotation(id){
     var annotation_label = d3.select("#"+id+"_label");
     annotation_label.remove();
 }
-
-function draw_map(){	
-//	var svg = d3.select("#us_map");
-//	var path = d3.geoPath();
-//	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
-//	  if (error) throw error;
-//
-//	color_scale = d3.scaleLinear()
-//		.domain([0,100])
-//		.range(["white", "red"])
-//
-//	draw_legend(color_scale);
-//	draw_tooltip();
-//
-//	  svg.append("g")
-//		  .attr("class", "states")
-//		.selectAll("path")
-//		.data(topojson.feature(us, us.objects.states).features)
-//		.enter().append("path")
-//		  .attr("d", path)
-//		  .style("fill", function(d){
-//
-//			//return color_scale(values_map.get(d.id))
-//			//if(d.id==states.get('CA')){return "blue"}
-//		  })
-//		  .on("click", function(d,i){
-//			  console.log(d.id + " " + i);
-//		  });
-//
-//	  svg.append("path")
-//		  .attr("class", "state-borders")
-//		  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
-//	});
-};
 
 function update_selections(d) {
 	var question_dropdown = d3.select("#question_dropdown")
@@ -294,7 +258,6 @@ function setup_gradient(){
         .attr("stop-opacity", 1);
 }
 
-
 function draw_tooltip(){
 	var svg = d3.select("#us_map");
 
@@ -314,6 +277,3 @@ function draw_tooltip(){
 			.style("left",(d3.event.pageX+10)+"px"); 
 		});
 }
-
-
-

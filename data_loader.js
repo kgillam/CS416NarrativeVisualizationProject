@@ -21,12 +21,9 @@ values_map = new Map([]);
 
 function update_data(year_selection, question_selection){
 	formatted_url = format_url(year_selection, question_selection)
-	console.log("formatted url: " + formatted_url)
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
-            console.log(data);
-
             data.forEach(d => {
                 values_map.set(d.locationid, d.data_value)
             });
