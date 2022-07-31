@@ -183,10 +183,12 @@ var pram_question_options = [
 ]
 
 var pram_breakout_options = [
-//	{"BreakOutCategoryid":"", "Break_Out_Category":""},
-//	{"BreakOutCategoryid":"", "Break_Out_Category":""},
-	{"BreakOutCategoryid":"BOC4", "Break_Out_Category":"Maternal Age (4 Levels)"},
-	{"BreakOutCategoryid":"BOC14", "Break_Out_Category":"Income (years 2004 and beyond)"}
+	{"BreakOutCategoryid":"BOC4", "Break_Out_Category":"Maternal Age"},
+	{"BreakOutCategoryid":"BOC14", "Break_Out_Category":"Income (years 2004 and beyond)"},
+	{"BreakOutCategoryid":"BOC10", "Break_Out_Category":"On WIC during Pregnancy"},
+    {"BreakOutCategoryid":"BOC6", "Break_Out_Category":"Maternal Race/Ethnicity"},
+    {"BreakOutCategoryid":"BOC5", "Break_Out_Category":"Maternal Education"},
+    {"BreakOutCategoryid":"BOC18", "Break_Out_Category":"Adequacy of Prenatal care"}
 ]
 
 

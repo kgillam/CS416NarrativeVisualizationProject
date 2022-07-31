@@ -12,6 +12,7 @@ function distance(start, end){
 }
 
 function draw_tooltip(){
+    var chart = d3.select("#bar_chart");
 	var svg = d3.select("#us_map");
 
 	var tooltip = d3.select("body")
@@ -29,12 +30,15 @@ function draw_tooltip(){
     svg.on("click", function() {
         console.log(d3.mouse(this))
     })
-
-	svg.on("mousemove", function() {
-			return tooltip.style("top", (d3.event.pageY-10)+"px")
-			.style("left",(d3.event.pageX+10)+"px");
-		});
+	svg.on("mousemove", my_mousemove)
+	chart.on("mousemove", my_mousemove)
 }
+
+function my_mousemove() {
+	var tooltip = d3.select("#mytooltip")
+    return tooltip.style("top", (d3.event.pageY-10)+"px")
+                .style("left",(d3.event.pageX+10)+"px");
+};
 
 function add_options_to_dropdown(dropdown, options, value_key, text_key, first_selection) {
     dropdown.selectAll("option")

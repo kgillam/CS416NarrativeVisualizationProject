@@ -1,30 +1,5 @@
-//function update_chart(){
-//    console.log("|updatingchart")
-//	width = 300;
-//	height = 300;
-//    keys = []
-//    for (var [key, value] of pram_values_map.entries()){
-//        keys.push(key)
-//    }
-//    console.log(keys)
-//
-//    g.append("g")
-//      .attr("id", "x_axis")
-//      .attr("transform", "translate(0," + height + ")")
-//      .call(d3.axisBottom(x))
-//      .selectAll("text")
-//        .attr("transform", "translate(-10,0)rotate(-45)")
-//        .style("text-anchor", "end");
-//
-//    var x = d3.scaleBand()
-//      .range([ 0, width ])
-//      .domain(keys)
-//
-//    var x_axis = d3.select("#x_axis")
-//    x_axis.call(d3.axisBottom(x))
-//}
-
-function draw_chart(){
+async function draw_chart(){
+    await new Promise(r => setTimeout(r, 350));//TODO
     console.log("drawing chart")
 	var svg = d3.select("#bar_chart");
 	var margin = {top: 30, right: 30, bottom: 70, left: 60},
@@ -45,13 +20,10 @@ function draw_chart(){
     for (var [key, value] of pram_values_map.entries()){
         keys.push(key)
     }
-//    console.log(keys)
     var x = d3.scaleBand()
       .range([ 0, width ])
-//      .domain(pram_values_map.map(function(d) { return d.Break_Out; }))
       .domain(keys)
-//      .domain(["one","two", "three"])
-//      .padding(0.2);
+      .padding(0.2);
     g.append("g")
       .attr("id", "x_axis")
       .attr("transform", "translate(0," + height + ")")
@@ -60,12 +32,35 @@ function draw_chart(){
         .attr("transform", "translate(-10,0)rotate(-45)")
         .style("text-anchor", "end");
 
-    // Add Y axis
     var y = d3.scaleLinear()
       .domain([0, 100])
       .range([ height, 0]);
     g.append("g")
       .call(d3.axisLeft(y).ticks(5))
+
+    g.selectAll("rect")
+        .data(pram_values_test)
+        .enter()
+        .append("rect")
+            .attr("x",  function(d){ return x(d.break_out) })
+            .attr("y", function(d){
+                return y(d.data_value) })
+            .attr("height", function(d) {
+                return height - y(d.data_value);
+            })
+            .attr("width", x.bandwidth())
+            .attr("fill", "purple")
+            .on("mouseover", function(d){
+                //show tooltip on hover
+                d3.select("#mytooltip")
+                    .style("visibility", "visible")//set style to it
+                    .text( d.data_value + "%")//set text to it
+            })
+            .on("mouseout", function(d){
+                d3.select("#mytooltip")
+                    .style("visibility", "hidden")//set style to it
+                    .text("")//set text to it
+            })
 }
 
 function add_chart_dropdowns(){
@@ -95,6 +90,5 @@ async function update_chart_selections() {
     var breakout_selection = breakout_dropdown.property('value')
 
     update_pram_data(question_selection, breakout_selection)
-    await new Promise(r => setTimeout(r, 100));//TODO
     draw_chart()
 }

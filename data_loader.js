@@ -39,17 +39,21 @@ function update_breastfeeding_data(year_selection, question_selection){
 }
 
 pram_values_map = new Map();
+var pram_values_test = [];
 
 function update_pram_data(question_id, breakout_id){
 	formatted_url = format_pram_url(question_id, breakout_id)
 
     pram_values_map.clear();
+    pram_values_test = [];
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             console.log("data received")
+            console.log(data)
             data.forEach(d => {
                 pram_values_map.set(d.break_out, d.data_value)
+                pram_values_test.push({"break_out":d.break_out, "data_value":d.data_value})
             });
 //            console.log(pram_values_map)
         });
