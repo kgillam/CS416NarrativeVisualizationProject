@@ -49,12 +49,14 @@ async function draw_chart(){
                 return height - y(d.data_value);
             })
             .attr("width", x.bandwidth())
-            .attr("fill", "purple")
+//            .attr("fill", "purple")
+            .attr("fill", function(d){
+                return color_scale(d.data_value) })
             .on("mouseover", function(d){
                 //show tooltip on hover
                 d3.select("#mytooltip")
                     .style("visibility", "visible")//set style to it
-                    .text( d.data_value + "%")//set text to it
+                    .text( Number(d.data_value) + "%")//set text to it
             })
             .on("mouseout", function(d){
                 d3.select("#mytooltip")
