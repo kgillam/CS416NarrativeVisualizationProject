@@ -1,10 +1,48 @@
-function update_map(){
-	var svg = d3.select("#us_map");
+function update_first_map(){
+    update_map(
+        "us_map",
+        breastfeeding_values_map,
+        function(d){
+            return state_names.get(state_keys(d.id)[0]) + ": " + breastfeeding_values_map.get(d.id) + "%"
+        },
+        function(d){
+            low_state = get_state_lowest_rate()
+            highest_state = get_state_highest_rate()
+            draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
+            draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
+        }
+    )
+}
+
+async function update_second_map(){
+    await new Promise(r => setTimeout(r, 350));//TODO
+    console.log("drawing_second_map")
+    update_map(
+        "second_map",
+        pram_state_values_map,
+        function(d){
+            value = pram_state_values_map.get(d.id)
+            if (value){
+                return state_names.get(state_keys(d.id)[0]) + ": " + value + "%"
+            }
+            return "Data not available for " + state_names.get(state_keys(d.id)[0])
+        }
+//        function(d){
+//            low_state = get_state_lowest_rate()
+//            highest_state = get_state_highest_rate()
+//            draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
+//            draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
+//        }
+    )
+}
+
+function update_map(map_id, values_map, text_function, other_updates){
+	var svg = d3.select("#"+map_id);
 	var path = d3.geoPath();
 	
 	//clear svg children
 	svg.selectAll("*").remove();
-    draw_legend()
+    draw_legend(map_id)
 
 	d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
 		if (error) throw error;
@@ -15,13 +53,19 @@ function update_map(){
 			.enter().append("path")
 			.attr("d", path)
 			.style("fill", function(d){
-				return color_scale(breastfeeding_values_map.get(d.id))
+			    value = values_map.get(d.id)
+			    if (value){
+			        color = color_scale(value)
+			    } else {
+			        color = "grey"
+			    }
+			    return color
 			})
 			.on("mouseover", function(d){
 				//show tooltip on hover
 				d3.select("#mytooltip")
 					.style("visibility", "visible")//set style to it
-					.text(state_names.get(state_keys(d.id)[0]) + ": " + breastfeeding_values_map.get(d.id) + "%")//set text to it
+					.text(text_function(d))//set text to it
 			})
 			.on("mouseout", function(){
 				d3.select("#mytooltip")
@@ -38,10 +82,10 @@ function update_map(){
 			  .attr("class", "state-borders")
 			  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
 
-	    low_state = get_state_lowest_rate()
-	    highest_state = get_state_highest_rate()
-        draw_annotation(lowest_state, state_positions.get(lowest_state) , "lowest")
-        draw_annotation(highest_state, state_positions.get(highest_state) , "highest")
+        if (other_updates){
+            other_updates()
+        }
+
 	});
 }
 
@@ -135,12 +179,21 @@ function update_selections(d) {
     var year_selection = year_dropdown.property('value')
 
     update_breastfeeding_data(year_selection, question_selection)
-    update_map()
+    update_first_map()
 }
 
-function draw_legend(){
-	var svg = d3.select("#us_map");
-	setup_gradient()
+function update_second_map_selections(d){
+	var question_dropdown = d3.select("#second_question_dropdown")
+
+	var question_selection = question_dropdown.property('value')
+
+    update_pram_state_data(question_selection)
+    update_second_map()
+}
+
+function draw_legend(id){
+	var svg = d3.select("#"+id);
+	setup_gradient(id)
 
     x = 1000;
     y = 50;
@@ -186,6 +239,16 @@ function add_dropdowns(){
 	update_breastfeeding_data("2000", "Q006")
 }
 
+function add_second_map_dropdowns(){
+	var controls_div = d3.select("#second_map_controls").append("div")
 
+	var second_question_dropdown = controls_div.insert("select", "svg")
+	                        .attr("id", "second_question_dropdown")
+	                        .on("change", update_second_map_selections)
+
+    add_options_to_dropdown(second_question_dropdown, pram_state_question_options, "QuestionId", "Question", "QUO8")
+
+	update_pram_state_data("QUO8")
+}
 
 

@@ -17,7 +17,7 @@ async function draw_chart(){
         .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
     keys = []
-    for (var [key, value] of pram_values_map.entries()){
+    for (var [key, value] of pram_national_values_map.entries()){
         keys.push(key)
     }
     var x = d3.scaleBand()
@@ -39,7 +39,7 @@ async function draw_chart(){
       .call(d3.axisLeft(y).ticks(5))
 
     g.selectAll("rect")
-        .data(pram_values_test)
+        .data(pram_national_values_test)
         .enter()
         .append("rect")
             .attr("x",  function(d){ return x(d.break_out) })
@@ -80,7 +80,7 @@ function add_chart_dropdowns(){
     add_options_to_dropdown(question_dropdown, pram_question_options, "QuestionId", "Question", "QUO37");
     add_options_to_dropdown(breakout_dropdown, pram_breakout_options, "BreakOutCategoryid", "Break_Out_Category", "BOC4")
 
-	update_pram_data("QUO37", "BOC4")
+	update_pram_national_data("QUO37", "BOC4")
 }
 
 async function update_chart_selections() {
@@ -91,6 +91,6 @@ async function update_chart_selections() {
 	var question_selection = question_dropdown.property('value')
     var breakout_selection = breakout_dropdown.property('value')
 
-    update_pram_data(question_selection, breakout_selection)
+    update_pram_national_data(question_selection, breakout_selection)
     draw_chart()
 }

@@ -16,13 +16,22 @@ function format_breastfeeding_url(year, question) {
     }
 }
 
-function format_pram_url(question_id, breakout_id) {
+function format_pram_national_url(question_id, breakout_id) {
     if (question_id && breakout_id) {
 	    return `${pram_stat_2011_base_url}?questionid=${question_id}&locationabbr=PRAMS%20Total&breakoutcategoryid=${breakout_id}&response=YES`
     } else {
         return null
     }
 }
+
+function format_pram_state_url(question_id) {
+    if (question_id) {
+	    return `${pram_stat_2011_base_url}?questionid=${question_id}&Break_Out_Category=None&response=YES`
+    } else {
+        return null
+    }
+}
+
 
 breastfeeding_values_map = new Map([]);
 
@@ -38,34 +47,51 @@ function update_breastfeeding_data(year_selection, question_selection){
 	}
 }
 
-pram_values_map = new Map();
-var pram_values_test = [];
+pram_national_values_map = new Map();
+var pram_national_values_test = [];
 
-function update_pram_data(question_id, breakout_id){
-	formatted_url = format_pram_url(question_id, breakout_id)
+function update_pram_national_data(question_id, breakout_id){
+	formatted_url = format_pram_national_url(question_id, breakout_id)
 
-    pram_values_map.clear();
-    pram_values_test = [];
+    pram_national_values_map.clear();
+    pram_national_values_test = [];
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             console.log("data received")
             console.log(data)
             data.forEach(d => {
-                pram_values_map.set(d.break_out, d.data_value)
-                pram_values_test.push({"break_out":d.break_out, "data_value":d.data_value})
+                pram_national_values_map.set(d.break_out, d.data_value)
+                pram_national_values_test.push({"break_out":d.break_out, "data_value":d.data_value})
             });
-//            console.log(pram_values_map)
+//            console.log(pram_national_values_map)
         });
 	} else{
 	    console.log("could not format url")
 	}
 }
 
-//get_data(formatted_url, function(data){
-//	console.log(data);
-//})[;
+pram_state_values_map = new Map();
+var pram_state_values_test = [];
 
+function update_pram_state_data(question_id){
+	formatted_url = format_pram_state_url(question_id)
+
+    pram_state_values_map.clear();
+    pram_state_values_test = [];
+
+	if (formatted_url) {
+        get_data(formatted_url, function(data){
+            console.log("data received")
+            data.forEach(d => {
+                pram_state_values_map.set(d.locationid, d.data_value)
+                pram_state_values_test.push({"LocationId":d.locationid, "Data_Value":d.data_value})
+            });
+        });
+	} else{
+	    console.log("could not format url")
+	}
+}
 
 
 //https://chronicdata.cdc.gov/resource/8hxn-cvik.json?yearstart=2011&questionid=Q004&$where=LocationDesc%20!=%20National

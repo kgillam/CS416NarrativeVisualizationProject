@@ -13,7 +13,8 @@ function distance(start, end){
 
 function draw_tooltip(){
     var chart = d3.select("#bar_chart");
-	var svg = d3.select("#us_map");
+	var first_map = d3.select("#us_map");
+	var second_map = d3.select("#second_map");
 
 	var tooltip = d3.select("body")
 		.append("div")
@@ -24,14 +25,13 @@ function draw_tooltip(){
 		.style("visibility", "hidden")
 		.style("background", tooltip_color)
 		.text("a simple tooltip")
-//        .attr("fill", "orange")
-//        .style("opacity", 0.5)
 
-    svg.on("click", function() {
+    first_map.on("click", function() {
         console.log(d3.mouse(this))
     })
-	svg.on("mousemove", my_mousemove)
+	first_map.on("mousemove", my_mousemove)
 	chart.on("mousemove", my_mousemove)
+	second_map.on("mousemove", my_mousemove)
 }
 
 function my_mousemove() {
@@ -45,8 +45,6 @@ function add_options_to_dropdown(dropdown, options, value_key, text_key, first_s
     			.data(options)
     			.enter().append("option")
     			.attr("value", function (d) {
-//    			    console.log(d)
-//    			    console.log(d[value_key])
     			    return d[value_key];
     			})
     			.text(function (d) {
@@ -56,8 +54,8 @@ function add_options_to_dropdown(dropdown, options, value_key, text_key, first_s
     dropdown.property("selected", function(){ return first_selection; })
 }
 
-function setup_gradient(){
-	var defs = d3.select("#us_map").append("defs");
+function setup_gradient(map_id){
+	var defs = d3.select("#"+map_id).append("defs");
 
 	var gradient1 = defs.append("linearGradient")
 		.attr("id", "svgGradient1")

@@ -12,16 +12,21 @@
 <div id="us_map_controls"></div>
 <svg id="us_map" width="1050" height="600"></svg>
 <div id="bar_chart_controls"></div>
-<svg id="bar_chart" width="1050" height="600"></svg>
+<svg id="bar_chart" width="1050" height="400"></svg>
+<div id="second_map_controls"></div>
+<svg id="second_map" width="1050" height="600"></svg>
 <script>
 async function init() {
-	update_pram_data("QUO37", "BOC4");
+	update_pram_national_data("QUO37", "BOC4");
+	update_pram_state_data("QUO8");
 	update_breastfeeding_data();
 
 	add_dropdowns();
 	add_chart_dropdowns();
+	add_second_map_dropdowns();
 	draw_tooltip();
-	update_map();
+	update_first_map();
+	update_second_map();
 	draw_chart();
 }
 </script>
