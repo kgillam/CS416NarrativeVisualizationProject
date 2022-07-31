@@ -42,7 +42,9 @@ function update_breastfeeding_data(year_selection, question_selection){
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             data.forEach(d => {
-                breastfeeding_values_map.set(d.locationid, d.data_value)
+                if (d.locationid != 59){
+                    breastfeeding_values_map.set(d.locationid, d.data_value)
+                }
             });
         });
 	}

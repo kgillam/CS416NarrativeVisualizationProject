@@ -1,4 +1,5 @@
-function update_first_map(){
+async function update_first_map(){
+    await new Promise(r => setTimeout(r, 600));//TODO
     update_map(
         "us_map",
         breastfeeding_values_map,
@@ -141,6 +142,7 @@ function draw_annotation(map_id, values_map, state_id, start, id, name, color="b
 
     var end = get_nearest_annotation_spot(start)
     var state = state_keys(state_id)[0]
+    console.log(start + " " + end)
     var data = [start,end]
     var svg = d3.select("#"+map_id)
 

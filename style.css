@@ -25,8 +25,15 @@ H1{
 }
 
 H2{
+    margin-left: 40px;
+    font-size: 30px;
+    margin-bottom: 0px;
 }
 
+H3{
+    font-size: 30px;
+    margin-bottom: 0px;
+}
 
 select {
 	display: block;
@@ -74,6 +81,13 @@ p {
     font-size: 20px;
 }
 
+.slim {
+    margin: 0px;
+    padding: 0px;
+    height: auto;
+    display: inline-block;
+}
+
 .quote{
     padding-left: 100px;
     padding-right: 100px;
@@ -92,7 +106,7 @@ p {
 }
 
 .page{
-    width:1200px;
+    width:1300px;
     height:800px;
     outline: 2px solid purple;
     margin: auto;
