@@ -26,7 +26,8 @@ function format_pram_national_url(question_id, breakout_id) {
 
 function format_pram_state_url(question_id) {
     if (question_id) {
-	    return `${pram_stat_2011_base_url}?questionid=${question_id}&Break_Out_Category=None&response=YES`
+//	    return `${pram_stat_2011_base_url}?questionid=${question_id}&Break_Out_Category=None&response=YES`
+	    return `${pram_stat_2011_base_url}?questionid=${question_id}&breakoutcategoryid=BOC6&response=YES`
     } else {
         return null
     }
@@ -71,26 +72,60 @@ function update_pram_national_data(question_id, breakout_id){
 	}
 }
 
+
+pram_state_values_map_black = new Map();
+pram_state_values_map_hispanic = new Map();
+pram_state_values_map_other = new Map();
+pram_state_values_map_white = new Map();
 pram_state_values_map = new Map();
-var pram_state_values_test = [];
+//var pram_state_values_test = [];
 
 function update_pram_state_data(question_id){
 	formatted_url = format_pram_state_url(question_id)
 
+    pram_state_values_map_black.clear();
+    pram_state_values_map_hispanic.clear();
+    pram_state_values_map_other.clear();
+    pram_state_values_map_white.clear();
     pram_state_values_map.clear();
-    pram_state_values_test = [];
+    //    pram_state_values_test = [];
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             console.log("data received")
             data.forEach(d => {
-                pram_state_values_map.set(d.locationid, d.data_value)
-                pram_state_values_test.push({"LocationId":d.locationid, "Data_Value":d.data_value})
+                if(d.breakoutid == "ETH1"){
+                    pram_state_values_map_black.set(d.locationid, d.data_value)
+                }else if(d.breakoutid == "ETH2"){
+                    pram_state_values_map_hispanic.set(d.locationid, d.data_value)
+                }else if(d.breakoutid == "ETH3"){
+                    pram_state_values_map_other.set(d.locationid, d.data_value)
+                }else if(d.breakoutid == "ETH4"){
+                    pram_state_values_map_white.set(d.locationid, d.data_value)
+                }
+//                pram_state_values_test.push({"LocationId":d.locationid, "Data_Value":d.data_value})
             });
+            for (var [key, value] of pram_state_values_map_black.entries()){
+                black = value
+                hispanic = pram_state_values_map_hispanic.get(key)
+                other = pram_state_values_map_other.get(key)
+                white = pram_state_values_map_white.get(key)
+
+                pram_state_values_map.set(key, compute_difference_value(black, hispanic, other, white))
+            }
+            console.log(pram_state_values_map)
         });
 	} else{
 	    console.log("could not format url")
 	}
+}
+
+function compute_difference_value(v1, v2, v3, v4){
+    console.log(v1 + " " + v2 + " " +  v3 + " " +  v4)
+    value_min = Math.min(v1, v2, v3, v4)
+    value_max = Math.max(v1, v2, v3, v4)
+    console.log(value_min + " " + value_max)
+    return value_max - value_min
 }
 
 

@@ -21,9 +21,13 @@ async function update_second_map(){
         "second_map",
         pram_state_values_map,
         function(d){
-            value = pram_state_values_map.get(d.id)
+            black = Math.round(pram_state_values_map_black.get(d.id))
+            hispanic = Math.round(pram_state_values_map_hispanic.get(d.id))
+            other = Math.round(pram_state_values_map_other.get(d.id))
+            white = Math.round(pram_state_values_map_white.get(d.id))
+            value = Math.round(pram_state_values_map.get(d.id))
             if (value){
-                return state_names.get(state_keys(d.id)[0]) + ": " + value + "%"
+                return `${state_names.get(state_keys(d.id)[0])}: ${value} difference between highest and lowest\n black: ${black}\n hispanic: ${hispanic}\n other: ${other}\n white: ${white}`
             }
             return "Data not available for " + state_names.get(state_keys(d.id)[0])
         }
