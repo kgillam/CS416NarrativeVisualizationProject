@@ -1,3 +1,37 @@
+function next(){
+    show(current_page + 1)
+    current_page = current_page + 1;
+    d3.select("#prev")
+//        .style("display", "block")
+        .style("visibility", "visible")
+    if (current_page == total_pages){
+        d3.select("#next")
+//            .style("display", "none")
+            .style("visibility", "collapse")
+    }
+}
+function prev(){
+    show(current_page - 1)
+    current_page = current_page - 1;
+    d3.select("#next")
+//        .style("display", "block")
+        .style("visibility", "visible")
+    if (current_page == 1){
+        d3.selectAll("#prev")
+//            .style("display", "none")
+            .style("visibility", "collapse")
+    }
+}
+function show(shown) {
+    console.log("current_page: " + current_page)
+    console.log("showing: " + shown)
+    d3.selectAll(".page")
+        .style("display", "none")
+    d3.select("#Page" + shown)
+        .style("display", "block")
+}
+
+
 function distance(start, end){
     if (!start || !end || start.length != 2 || end.length !=2){
         console.log("cannot calculate distance")
