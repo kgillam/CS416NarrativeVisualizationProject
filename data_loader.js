@@ -8,7 +8,7 @@ function get_data(url, callback) {
   console.log(`request sent to ${url}`)
 }
 
-function format_url(year, question) {
+function format_breastfeeding_url(year, question) {
     if (year && question) {
 	    return `${breastfeeding_survey_base_url}?yearstart=${year}&questionid=${question}`
     } else {
@@ -16,16 +16,39 @@ function format_url(year, question) {
     }
 }
 
+function format_pram_url(question_id) {
+    if (year && question) {
+	    return `${pram_stat_2011_base_url}?QuestionId=${question_id}`
+    } else {
+        return null
+    }
+}
 
-values_map = new Map([]);
+breastfeeding_values_map = new Map([]);
 
-function update_data(year_selection, question_selection){
-	formatted_url = format_url(year_selection, question_selection)
+function update_breastfeeding_data(year_selection, question_selection){
+	formatted_url = format_breastfeeding_url(year_selection, question_selection)
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             data.forEach(d => {
-                values_map.set(d.locationid, d.data_value)
+                breastfeeding_values_map.set(d.locationid, d.data_value)
+            });
+        });
+	}
+}
+
+pram_values_map = new Map([]);
+
+function update_pram_data(question_id){
+	formatted_url = format_pram_url(question_id)
+
+    pram_values_map.clear();
+
+	if (formatted_url) {
+        get_data(formatted_url, function(data){
+            data.forEach(d => {
+                pram_values_map.set(d.Break_Out, d.Data_Value)
             });
         });
 	}

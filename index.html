@@ -4,20 +4,22 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/topojson.v2.min.js"></script>
 <script src="./consts.js"></script>
+<script src="./util.js"></script>
 <script src="./data_loader.js"></script>
 <script src="./draw_us_map.js"></script>
+<script src="./draw_chart.js"></script>
 <body onload='init()'>
-<div id="controls">
-
-</div>
+<div id="us_map_controls"></div>
 <svg id="us_map" width="1050" height="600"></svg>
+<svg id="bar_chart" width="1050" height="600"></svg>
 <script>
 async function init() {
-	update_data();
+	update_breastfeeding_data();
 	
 	add_dropdowns();
 	draw_tooltip();
 	update_map();
+	update_chart();
 }
 </script>
 </body>
