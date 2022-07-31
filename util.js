@@ -58,14 +58,14 @@ function setup_gradient(map_id){
 	var defs = d3.select("#"+map_id).append("defs");
 
 	var gradient1 = defs.append("linearGradient")
-		.attr("id", "svgGradient1")
+		.attr("id", map_id+"svgGradient1")
         .attr("x1", "100%")
         .attr("x2", "100%")
         .attr("y1", "0%")
         .attr("y2", "100%");
 
     var gradient2 = defs.append("linearGradient")
-        .attr("id", "svgGradient2")
+        .attr("id", map_id+"svgGradient2")
         .attr("x1", "0%")
         .attr("x2", "0%")
         .attr("y1", "0%")

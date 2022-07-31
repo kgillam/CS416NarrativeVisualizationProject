@@ -209,13 +209,13 @@ function draw_legend(id){
 		.attr("height",height)
 		.attr("width",width)
 //		.attr("fill", "blue");
-		.attr("fill", "url(#svgGradient1)");
+		.attr("fill", "url(#" + id + "svgGradient1)");
     svg.append("rect")
         .attr("x",x)
         .attr("y",y + height)
         .attr("height",height)
         .attr("width",width)
-        .attr("fill", "url(#svgGradient2)");
+        .attr("fill", "url(#" + id + "svgGradient2)");
     svg.append("text")
         .text("100%")
 		.attr("x",x-10)

@@ -18,6 +18,30 @@ select {
   font-size: 18px;
 }
 
+p {
+}
+
+.p_group{
+  margin: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.page{
+    width:1200px;
+    height:700px;
+    outline: 2px solid purple;
+    margin: auto;
+    padding: 20px;
+}
+
+
+svg{
+    display:block;
+    margin: auto;
+}
+
+
 .state-borders {
   fill: none;
   stroke: #fff;
