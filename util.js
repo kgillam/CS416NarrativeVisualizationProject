@@ -23,8 +23,8 @@ function prev(){
     }
 }
 function show(shown) {
-    console.log("current_page: " + current_page)
-    console.log("showing: " + shown)
+    console.log("current page: " + current_page)
+    console.log("switching to page: " + shown)
     d3.selectAll(".page")
         .style("display", "none")
     d3.select("#Page" + shown)

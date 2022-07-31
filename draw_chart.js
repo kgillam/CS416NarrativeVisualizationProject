@@ -1,5 +1,5 @@
 async function draw_chart(){
-    await new Promise(r => setTimeout(r, 350));//TODO
+    await new Promise(r => setTimeout(r, 400));//TODO
     console.log("drawing chart")
 	var svg = d3.select("#bar_chart");
 	var margin = {top: 30, right: 30, bottom: 70, left: 60},
@@ -66,14 +66,22 @@ async function draw_chart(){
 }
 
 function add_chart_dropdowns(){
-	var controls_div = d3.select("#bar_chart_controls").append("div")
+	var controls_div = d3.select("#bar_chart_controls")
 //	controls_div.selectAll("*").remove();
+    var div1 = controls_div.insert("div")
+                            .attr("class", "control")
+    var div2 = controls_div.insert("div")
+                            .attr("class", "control")
+    div1.insert("span")
+         .text("Select Survey Question: ")
 
-	var question_dropdown = controls_div.insert("select", "svg")
+	var question_dropdown = div1.insert("select", "svg")
 	                        .attr("id", "chart_question_dropdown")
 	                        .on("change", update_chart_selections)
 
-	var breakout_dropdown = controls_div.insert("select", "svg")
+    div2.insert("span")
+        .text("Select Breakdown Category: ")
+	var breakout_dropdown = div2.insert("select", "svg")
 		                    .attr("id", "chart_breakout_dropdown")
 		                    .on("change", update_chart_selections)
 

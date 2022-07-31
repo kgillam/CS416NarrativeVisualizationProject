@@ -60,12 +60,10 @@ function update_pram_national_data(question_id, breakout_id){
 	if (formatted_url) {
         get_data(formatted_url, function(data){
             console.log("data received")
-            console.log(data)
             data.forEach(d => {
                 pram_national_values_map.set(d.break_out, d.data_value)
                 pram_national_values_test.push({"break_out":d.break_out, "data_value":d.data_value})
             });
-//            console.log(pram_national_values_map)
         });
 	} else{
 	    console.log("could not format url")
@@ -113,7 +111,6 @@ function update_pram_state_data(question_id){
 
                 pram_state_values_map.set(key, compute_difference_value(black, hispanic, other, white))
             }
-            console.log(pram_state_values_map)
         });
 	} else{
 	    console.log("could not format url")
@@ -121,10 +118,8 @@ function update_pram_state_data(question_id){
 }
 
 function compute_difference_value(v1, v2, v3, v4){
-    console.log(v1 + " " + v2 + " " +  v3 + " " +  v4)
     value_min = Math.min(v1, v2, v3, v4)
     value_max = Math.max(v1, v2, v3, v4)
-    console.log(value_min + " " + value_max)
     return value_max - value_min
 }
 

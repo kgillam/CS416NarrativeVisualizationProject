@@ -15,7 +15,7 @@ function update_first_map(){
 }
 
 async function update_second_map(){
-    await new Promise(r => setTimeout(r, 350));//TODO
+    await new Promise(r => setTimeout(r, 400));//TODO
     console.log("drawing_second_map")
     update_map(
         "second_map",
@@ -227,13 +227,20 @@ function draw_legend(id){
 }
 
 function add_dropdowns(){
-	var controls_div = d3.select("#us_map_controls").append("div")
+	var controls_div = d3.select("#us_map_controls")//.append("div")
 
-	var question_dropdown = controls_div.insert("select", "svg")
+    var div1 = controls_div.insert("div")
+                            .attr("class", "control")
+    var div2 = controls_div.insert("div")
+                            .attr("class", "control")
+    div1.insert("span")
+        .text("Select Survey Question: ")
+	var question_dropdown = div1.insert("select", "svg")
 	                        .attr("id", "question_dropdown")
 	                        .on("change", update_selections)
-
-	var year_dropdown = controls_div.insert("select", "svg")
+    div2.insert("span")
+        .text("Select Survey Year: ")
+	var year_dropdown = div2.insert("select", "svg")
 		                    .attr("id", "year_dropdown")
 		                    .on("change", update_selections)
 
@@ -244,9 +251,13 @@ function add_dropdowns(){
 }
 
 function add_second_map_dropdowns(){
-	var controls_div = d3.select("#second_map_controls").append("div")
+	var controls_div = d3.select("#second_map_controls")
 
-	var second_question_dropdown = controls_div.insert("select", "svg")
+    var div1 = controls_div.insert("div")
+                            .attr("class", "control")
+    div1.insert("span")
+        .text("Select Survey Question: ")
+	var second_question_dropdown = div1.insert("select", "svg")
 	                        .attr("id", "second_question_dropdown")
 	                        .on("change", update_second_map_selections)
 
