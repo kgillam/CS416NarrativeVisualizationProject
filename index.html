@@ -11,15 +11,18 @@
 <body onload='init()'>
 <div id="us_map_controls"></div>
 <svg id="us_map" width="1050" height="600"></svg>
+<div id="bar_chart_controls"></div>
 <svg id="bar_chart" width="1050" height="600"></svg>
 <script>
 async function init() {
 	update_breastfeeding_data();
+	update_pram_data();
 	
 	add_dropdowns();
+	add_chart_dropdowns();
 	draw_tooltip();
 	update_map();
-	update_chart();
+	draw_chart();
 }
 </script>
 </body>

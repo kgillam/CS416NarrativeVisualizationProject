@@ -36,6 +36,22 @@ function draw_tooltip(){
 		});
 }
 
+function add_options_to_dropdown(dropdown, options, value_key, text_key, first_selection) {
+    dropdown.selectAll("option")
+    			.data(options)
+    			.enter().append("option")
+    			.attr("value", function (d) {
+    			    console.log(d)
+    			    console.log(d[value_key])
+    			    return d[value_key];
+    			})
+    			.text(function (d) {
+    				return d[text_key];
+    		});
+
+    dropdown.property("selected", function(){ return first_selection; })
+}
+
 function setup_gradient(){
 	var defs = d3.select("#us_map").append("defs");
 

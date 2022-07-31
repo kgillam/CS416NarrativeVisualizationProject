@@ -174,13 +174,21 @@ var breastfed_year_options = [
     {"year":"2018"}
 ]
 
-var breastfed_question_options = [
+var pram_question_options = [
 	{"QuestionId":"QUO37", "Question":"During any of your prenatal care visits  did a doctor  nurse  or other health care worker talk with you about breastfeeding your baby?"},
 	{"QuestionId":"QUO5", "Question":"Did you ever breastfeed or pump breast milk to feed your new baby after delivery?"},
 	{"QuestionId":"QUO297", "Question":"Did you get prenatal care as early in your pregnancy as you wanted? (years 2009-2011)"},
 	{"QuestionId":"QUO4", "Question":"Indicator of whether mother was still breastfeeding 4 weeks after delivery."},
 	{"QuestionId":"QUO44", "Question":"Indicator of whether mother was still breastfeeding 8 weeks after delivery."}
 ]
+
+var pram_breakout_options = [
+//	{"BreakOutCategoryid":"", "Break_Out_Category":""},
+//	{"BreakOutCategoryid":"", "Break_Out_Category":""},
+	{"BreakOutCategoryid":"BOC4", "Break_Out_Category":"Maternal Age (4 Levels)"},
+	{"BreakOutCategoryid":"BOC14", "Break_Out_Category":"Income (years 2004 and beyond)"}
+]
+
 
 var annotation_positions = [
     [150,  5],

@@ -138,18 +138,6 @@ function update_selections(d) {
     update_map()
 }
 
-function add_options_to_dropdown(dropdown, options, value_key, text_key, first_selection) {
-    dropdown.selectAll("option")
-    			.data(options)
-    			.enter().append("option")
-    			.attr("value", function (d) { return d[value_key]; })
-    			.text(function (d) {
-    				return d[text_key];
-    		});
-
-    dropdown.property("selected", function(){ return first_selection; })
-}
-
 function draw_legend(){
 	var svg = d3.select("#us_map");
 	setup_gradient()

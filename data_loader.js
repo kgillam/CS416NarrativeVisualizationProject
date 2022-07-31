@@ -16,9 +16,9 @@ function format_breastfeeding_url(year, question) {
     }
 }
 
-function format_pram_url(question_id) {
-    if (year && question) {
-	    return `${pram_stat_2011_base_url}?QuestionId=${question_id}`
+function format_pram_url(question_id, breakout_id) {
+    if (question_id && breakout_id) {
+	    return `${pram_stat_2011_base_url}?questionid=${question_id}&locationabbr=PRAMS%20Total&breakoutcategoryid=${breakout_id}&response=YES`
     } else {
         return null
     }
@@ -38,19 +38,23 @@ function update_breastfeeding_data(year_selection, question_selection){
 	}
 }
 
-pram_values_map = new Map([]);
+pram_values_map = new Map();
 
-function update_pram_data(question_id){
-	formatted_url = format_pram_url(question_id)
+function update_pram_data(question_id, breakout_id){
+	formatted_url = format_pram_url(question_id, breakout_id)
 
-    pram_values_map.clear();
+//    pram_values_map.clear();
 
 	if (formatted_url) {
         get_data(formatted_url, function(data){
+            console.log("data " + data)
             data.forEach(d => {
-                pram_values_map.set(d.Break_Out, d.Data_Value)
+                pram_values_map.set(d.break_out, d.data_value)
             });
+//            console.log(pram_values_map)
         });
+	} else{
+	    console.log("could not format url")
 	}
 }
 
