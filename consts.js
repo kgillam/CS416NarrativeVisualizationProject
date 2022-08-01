@@ -1,6 +1,6 @@
 white = "#ffffff"
 dark_blue = "#0066ff"
-tooltip_color = "#f58c69"
+tooltip_color = "#ffe6ff"
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

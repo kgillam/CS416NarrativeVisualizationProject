@@ -1,5 +1,5 @@
 body{
-    background-color: pink;
+    background-color: #ffe6ff;
 }
 
 .main {
@@ -66,22 +66,23 @@ a {
 }
 
 a:hover {
-  background-color: #ddd;
+  background-color: #ffe6ff;
   color: black;
 }
 
 .previous {
-  background-color: #f1f1f1;
+  background-color: thistle;
   color: black;
 }
 
 .next {
-  background-color: #f58c69;
-  color: white;
+  background-color: thistle;
+  color: black;
 }
 
 .round {
   border-radius: 50%;
+  outline: 2px solid mediumpurple;
 }
 
 p {
@@ -127,9 +128,10 @@ img {
 .page{
     width:1300px;
     height:800px;
-    outline: 2px solid purple;
+    outline: 2px solid mediumpurple;
     margin: auto;
     padding: 20px;
+    background: thistle;
 }
 
 svg{
