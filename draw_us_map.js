@@ -227,7 +227,7 @@ function draw_legend(id, legend_text){
     svg.append("text")
         .text("0")
 		.attr("x",x)
-		.attr("y",y + height*2 + 5)
+		.attr("y",y + height*2 + 15)
     svg.append("text")
         .text(legend_text)
         .attr("x",100)

@@ -1,8 +1,8 @@
 async function draw_chart(){
-    await new Promise(r => setTimeout(r, 400));//TODO
+    await new Promise(r => setTimeout(r, 600));//TODO
     console.log("drawing chart")
 	var svg = d3.select("#bar_chart");
-	var margin = {top: 30, right: 30, bottom: 70, left: 60},
+	var margin = {top: 60, right: 30, bottom: 70, left: 350},
         width = 460 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
