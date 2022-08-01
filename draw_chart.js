@@ -2,12 +2,12 @@ async function draw_chart(){
     await new Promise(r => setTimeout(r, 600));//TODO
     console.log("drawing chart")
 	var svg = d3.select("#bar_chart");
-	var margin = {top: 60, right: 30, bottom: 70, left: 350},
+	var margin = {top: 60, right: 30, bottom: 70, left: 200},
         width = 460 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
-	width = 300;
-	height = 300;
+	width = 600;
+	height = 400;
 
     //clear svg children
     svg.selectAll("*").remove();
@@ -29,6 +29,7 @@ async function draw_chart(){
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
       .selectAll("text")
+        .style("font", "14px sans-serif")
         .attr("transform", "translate(-10,0)rotate(-45)")
         .style("text-anchor", "end");
 
@@ -36,6 +37,7 @@ async function draw_chart(){
       .domain([0, 100])
       .range([ height, 0]);
     g.append("g")
+      .style("font", "14px sans-serif")
       .call(d3.axisLeft(y).ticks(5))
 
     g.selectAll("rect")

@@ -26,17 +26,20 @@ H1{
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: sans-serif;
 }
 
 H2{
     margin-left: 40px;
     font-size: 30px;
     margin-bottom: 0px;
+    font-family: sans-serif;
 }
 
 H3{
     font-size: 30px;
     margin-bottom: 0px;
+    font-family: sans-serif;
 }
 
 select {
@@ -82,7 +85,8 @@ a:hover {
 }
 
 p {
-    font-size: 20px;
+    font-family: sans-serif;
+    font-size: 18px;
 }
 
 .slim {
